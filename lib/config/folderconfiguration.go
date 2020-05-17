@@ -46,7 +46,7 @@ type FolderConfiguration struct {
 	PullerMaxPendingKiB     int                         `xml:"pullerMaxPendingKiB" json:"pullerMaxPendingKiB"`
 	Hashers                 int                         `xml:"hashers" json:"hashers"` // Less than one sets the value to the number of cores. These are CPU bound due to hashing.
 	Order                   PullOrder                   `xml:"order" json:"order"`
-	IgnoreDelete            bool                        `xml:"ignoreDelete" json:"ignoreDelete"`
+	IgnoreDelete            bool                        `xml:"ignoreDelete" json:"ignoreDelete" default:"true"`
 	ScanProgressIntervalS   int                         `xml:"scanProgressIntervalS" json:"scanProgressIntervalS"` // Set to a negative value to disable. Value of 0 will get replaced with value of 2 (default value)
 	PullerPauseS            int                         `xml:"pullerPauseS" json:"pullerPauseS"`
 	MaxConflicts            int                         `xml:"maxConflicts" json:"maxConflicts" default:"-1"`
@@ -80,6 +80,7 @@ func NewFolderConfiguration(myID protocol.DeviceID, id, label string, fsType fs.
 		Devices:        []FolderDeviceConfiguration{{DeviceID: myID}},
 		FilesystemType: fsType,
 		Path:           path,
+		IgnoreDelete:   true,
 	}
 
 	util.SetDefaults(&f)
